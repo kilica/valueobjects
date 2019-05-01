@@ -27,13 +27,17 @@ class Second extends Natural
     const MIN_SECOND = 0;
     const MAX_SECOND = 59;
 
+    public static $format = "s";
+
     /**
      * Returns a new Second object.
      *
      * @param int $value
      */
-    public function __construct(int $value)
+    public function __construct(int $value, string $format = null)
     {
+        $this->setFormat($format);
+
         $options = [
             'options' => ['min_range' => self::MIN_SECOND, 'max_range' => self::MAX_SECOND],
         ];
@@ -48,6 +52,16 @@ class Second extends Natural
     }
 
     /**
+     * @param  string   $format
+     */
+    public function setFormat(string $format = null)
+    {
+        if (isset($format)) {
+            self::$format = $format;
+        }
+    }
+
+    /**
      * Returns the current second.
      *
      * @return Second
@@ -55,7 +69,7 @@ class Second extends Natural
     public static function now(): Second
     {
         $now = new \DateTime('now');
-        $second = \intval($now->format('s'));
+        $second = \intval($now->format(self::$format));
 
         return new static($second);
     }

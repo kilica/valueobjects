@@ -29,13 +29,18 @@ class Minute extends Natural
 
     const MAX_MINUTE = 59;
 
+    public static $format = "i";
+
     /**
      * Returns a new Minute object.
      *
      * @param int $value
+     * @param string    $format
      */
-    public function __construct(int $value)
+    public function __construct(int $value, string $format = null)
     {
+        $this->setFormat($format);
+
         $options = [
             'options' => ['min_range' => self::MIN_MINUTE, 'max_range' => self::MAX_MINUTE],
         ];
@@ -47,6 +52,16 @@ class Minute extends Natural
         }
 
         parent::__construct($value);
+    }
+
+    /**
+     * @param  string   $format
+     */
+    public function setFormat(string $format = null)
+    {
+        if (isset($format)) {
+            self::$format = $format;
+        }
     }
 
     /**
@@ -71,7 +86,7 @@ class Minute extends Natural
     public static function now(): Minute
     {
         $now = new \DateTime('now');
-        $minute = \intval($now->format('i'));
+        $minute = \intval($now->format(self::$format));
 
         return new static($minute);
     }

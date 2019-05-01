@@ -28,13 +28,17 @@ class Hour extends Natural
     const MIN_HOUR = 0;
     const MAX_HOUR = 23;
 
+    public $format = "G";
+
     /**
      * Returns a new Hour object.
      *
      * @param int $value
      */
-    public function __construct(int $value)
+    public function __construct(int $value, string $format = null)
     {
+        $this->setFormat($format);
+
         $options = [
             'options' => ['min_range' => self::MIN_HOUR, 'max_range' => self::MAX_HOUR],
         ];
@@ -46,6 +50,16 @@ class Hour extends Natural
         }
 
         parent::__construct($value);
+    }
+
+    /**
+     * @param  string   $format
+     */
+    public function setFormat(string $format = null)
+    {
+        if (isset($format)) {
+            $this->format = $format;
+        }
     }
 
     /**

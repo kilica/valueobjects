@@ -34,18 +34,23 @@ class Date implements ValueObjectInterface
     /** @var MonthDay */
     protected $day;
 
+    public $format = "Y-m-d";
+
     /**
      * Create a new Date.
      *
      * @param Year     $year
      * @param Month    $month
      * @param MonthDay $day
+     * @param string    $format
      *
      * @throws InvalidDateException
      */
-    public function __construct(Year $year, Month $month, MonthDay $day)
+    public function __construct(Year $year, Month $month, MonthDay $day, string $format = null)
     {
-        \DateTime::createFromFormat('Y-F-j', \sprintf('%d-%s-%d', $year->toNative(), $month, $day->toNative()));
+        $this->setFormat($format);
+
+        \DateTime::createFromFormat($format, \sprintf('%d-%s-%d', $year->toNative(), $month, $day->toNative()));
         $nativeDateErrors = \DateTime::getLastErrors();
 
         if ($nativeDateErrors['warning_count'] > 0 || $nativeDateErrors['error_count'] > 0) {
@@ -58,13 +63,23 @@ class Date implements ValueObjectInterface
     }
 
     /**
+     * @param  string   $format
+     */
+    public function setFormat(string $format = null)
+    {
+        if (isset($format)) {
+            $this->format = $format;
+        }
+    }
+
+    /**
      * Returns date as string in format Y-n-j.
      *
      * @return string
      */
     public function __toString(): string
     {
-        return $this->toNativeDateTime()->format('Y-n-j');
+        return $this->toNativeDateTime()->format($this->format);
     }
 
     /**
