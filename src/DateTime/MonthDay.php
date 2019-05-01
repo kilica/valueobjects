@@ -27,6 +27,8 @@ class MonthDay extends Natural
     const MIN_MONTH_DAY = 1;
     const MAX_MONTH_DAY = 31;
 
+    public static $format = "d";
+
     /**
      * Returns a new MonthDay.
      *
@@ -48,6 +50,16 @@ class MonthDay extends Natural
     }
 
     /**
+     * @param  string   $format
+     */
+    public function setFormat(string $format = null)
+    {
+        if (isset($format)) {
+            self::$format = $format;
+        }
+    }
+
+    /**
      * Returns the current month day.
      *
      * @return MonthDay
@@ -55,7 +67,7 @@ class MonthDay extends Natural
     public static function now(): MonthDay
     {
         $now = new \DateTime('now');
-        $monthDay = \intval($now->format('j'));
+        $monthDay = \intval($now->format(self::$format));
 
         return new static($monthDay);
     }

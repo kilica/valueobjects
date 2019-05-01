@@ -33,18 +33,33 @@ class Time implements ValueObjectInterface
     /** @var Second */
     protected $second;
 
+    public $format = "H:i:s";
+
     /**
      * Returns a new Time objects.
      *
      * @param Hour   $hour
      * @param Minute $minute
      * @param Second $second
+     * @param string $format
      */
-    public function __construct(Hour $hour, Minute $minute, Second $second)
+    public function __construct(Hour $hour, Minute $minute, Second $second, string $format = null)
     {
+        $this->setFormat($format);
+
         $this->hour = $hour;
         $this->minute = $minute;
         $this->second = $second;
+    }
+
+    /**
+     * @param  string   $format
+     */
+    public function setFormat(string $format = null)
+    {
+        if (isset($format)) {
+            $this->format = $format;
+        }
     }
 
     /**
@@ -54,7 +69,7 @@ class Time implements ValueObjectInterface
      */
     public function __toString(): string
     {
-        return $this->toNativeDateTime()->format('G:i:s');
+        return $this->toNativeDateTime()->format($this->format);
     }
 
     /**
