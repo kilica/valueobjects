@@ -1,6 +1,6 @@
 {
-  "name": "ytake/valueobjects",
-  "description": "A PHP library/collection of classes aimed to help developers using and undestanding immutable objects.(temporary package)",
+  "name": "kilica/valueobjects",
+  "description": "A PHP library/collection of classes aimed to help developers using and undestanding immutable objects.(temporary package) Forked from ytake/valueobjects",
   "keywords": ["vo", "value object", "architecture", "domain driven design"],
   "license": "MIT",
   "authors": [
@@ -11,6 +11,10 @@
     {
       "name": "Yuuki Takezawa",
       "email": "yuuki.takezawa@comnect.jp.net"
+    }
+    {
+      "name": "HIKAWA Kilica",
+      "email": "kilica.hikawa@gmail.com"
     }
   ],
   "require": {
